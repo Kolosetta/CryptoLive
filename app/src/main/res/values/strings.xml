@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CryptoLive</string>
+    <string name="listOfCrypto">Список криптовалют</string>
 </resources>
