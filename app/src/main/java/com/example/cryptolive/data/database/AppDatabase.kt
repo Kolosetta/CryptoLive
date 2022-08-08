@@ -1,9 +1,10 @@
-package com.example.cryptolive.data.database.model
+package com.example.cryptolive.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.cryptolive.data.database.model.CoinInfoDbModel
 
 @Database(entities = [CoinInfoDbModel::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
@@ -12,7 +13,7 @@ abstract class AppDatabase : RoomDatabase() {
         private const val DB_NAME = "main.db"
         private val LOCK = Any()
 
-        fun getInstance(context: Context) : AppDatabase{
+        fun getInstance(context: Context) : AppDatabase {
             synchronized(LOCK){
                 db?.let {
                     return it
@@ -27,4 +28,6 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
+
+    abstract fun CoinInfoDao(): CoinInfoDao
 }
