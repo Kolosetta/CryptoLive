@@ -33,14 +33,17 @@ class CoinRepositoryImp(application: Application) : CoinRepository {
     //Загружает информацию о валютах и кладет в бд
     override suspend fun loadData() {
         while(true) {
-            val topCoins = apiService.getTopCoinsInfo(limit = 50)
-            val fromSymbols = mapper.mapNamesListToString(topCoins)
-            val jsonContainer = apiService.getFullPriceList(fSyms = fromSymbols)
-            val coinInfoDtoList = mapper.mapJsonContainerToListCoinInfo(jsonContainer)
-            val coinInfoDbModelList = coinInfoDtoList.map {
-                mapper.mapDtoToDbModel(it)
+            try {
+                val topCoins = apiService.getTopCoinsInfo(limit = 50)
+                val fromSymbols = mapper.mapNamesListToString(topCoins)
+                val jsonContainer = apiService.getFullPriceList(fSyms = fromSymbols)
+                val coinInfoDtoList = mapper.mapJsonContainerToListCoinInfo(jsonContainer)
+                val coinInfoDbModelList = coinInfoDtoList.map {
+                    mapper.mapDtoToDbModel(it)
+                }
+                coinInfoDao.insertPriceList(coinInfoDbModelList)
+            } catch (e: Exception) {
             }
-            coinInfoDao.insertPriceList(coinInfoDbModelList)
             delay(10000)
         }
     }

@@ -9,12 +9,12 @@ import com.example.cryptolive.data.database.model.CoinInfoDbModel
 
 @Dao
 interface CoinInfoDao {
-    @Query("SELECT * FROM full_price ORDER BY lastUpdate DESC")
+    @Query("SELECT * FROM price_list ORDER BY lastUpdate DESC")
     fun getPriceList(): LiveData<List<CoinInfoDbModel>>
 
-    @Query("SELECT * FROM full_price WHERE fromSymbol == :fSym LIMIT 1")
+    @Query("SELECT * FROM price_list WHERE fromSymbol == :fSym LIMIT 1")
     fun getPriceInfoAboutCoin(fSym: String): LiveData<CoinInfoDbModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPriceList(priceList: List<CoinInfoDbModel>)
+    suspend fun insertPriceList(priceList: List<CoinInfoDbModel>)
 }
