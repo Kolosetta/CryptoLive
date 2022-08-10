@@ -10,7 +10,7 @@ import com.example.cryptolive.domain.CoinInfo
 import com.example.cryptolive.domain.repository.CoinRepository
 import kotlinx.coroutines.delay
 
-class CoinRepositoryImp(application: Application) : CoinRepository {
+class CoinRepositoryImp(private val application: Application) : CoinRepository {
 
     private val coinInfoDao = AppDatabase.getInstance(application).CoinInfoDao()
     private val apiService = ApiFactory.apiService
