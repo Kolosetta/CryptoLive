@@ -1,13 +1,12 @@
 package com.example.cryptoapp.presentation.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cryptoapp.utils.convertTimestampToTime
 import com.example.cryptolive.R
-import com.example.cryptolive.data.network.ApiFactory.BASE_IMAGE_URL
 import com.example.cryptolive.domain.CoinInfo
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_coin_info.view.*
@@ -40,8 +39,8 @@ class CoinInfoAdapter(private val context: Context) :
                 tvSymbols.text = String.format(symbolsTemplate, fromSymbol, toSymbol)
                 tvPrice.text = price
                 tvLastUpdate.text =
-                    String.format(lastUpdateTemplate, convertTimestampToTime(lastUpdate))
-                Picasso.get().load(BASE_IMAGE_URL + imgUrl).into(ivLogoCoin)
+                    String.format(lastUpdateTemplate, lastUpdate)
+                Picasso.get().load(imgUrl).into(ivLogoCoin)
                 itemView.setOnClickListener {
                     onCoinClickListener?.onCoinClick(this)
                 }
