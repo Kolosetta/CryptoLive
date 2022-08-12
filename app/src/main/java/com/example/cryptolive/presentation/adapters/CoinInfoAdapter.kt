@@ -1,4 +1,4 @@
-package com.example.cryptoapp.presentation.adapters
+package com.example.cryptolive.presentation.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.cryptolive.R
 import com.example.cryptolive.databinding.ItemCoinInfoBinding
 import com.example.cryptolive.domain.CoinInfo
-import com.example.cryptolive.presentation.adapters.CoinInfoDiffCallback
-import com.example.cryptolive.presentation.adapters.CoinInfoViewHolder
 import com.squareup.picasso.Picasso
 
 class CoinInfoAdapter(private val context: Context) : ListAdapter<CoinInfo, CoinInfoViewHolder>(CoinInfoDiffCallback()) {
