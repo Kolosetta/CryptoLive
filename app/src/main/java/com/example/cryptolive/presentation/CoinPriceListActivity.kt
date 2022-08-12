@@ -3,6 +3,7 @@ package com.example.cryptolive.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.example.cryptolive.R
 import com.example.cryptolive.presentation.adapters.CoinInfoAdapter
 import com.example.cryptolive.databinding.ActivityCoinPrceListBinding
 import com.example.cryptolive.domain.CoinInfo
@@ -18,12 +19,13 @@ class CoinPriceListActivity : AppCompatActivity() {
         setContentView(binding.root)
         val adapter = CoinInfoAdapter(this)
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
-            override fun onCoinClick(coinPriceInfo: CoinInfo) {
-                val intent = CoinDetailActivity.newIntent(
-                    this@CoinPriceListActivity,
-                    coinPriceInfo.fromSymbol
-                )
-                startActivity(intent)
+            override fun onCoinClick(coinItem: CoinInfo) {
+                if(isVerticalOrientation()){
+                    launchDetailActivity(coinItem.fromSymbol)
+                }
+                else{
+                    launchDetailFragment(coinItem.fromSymbol)
+                }
             }
         }
         binding.rvCoinPriceList.adapter = adapter
@@ -32,5 +34,30 @@ class CoinPriceListActivity : AppCompatActivity() {
         viewModel.coinInfoList.observe(this) {
             adapter.submitList(it)
         }
+    }
+
+    private fun launchDetailFragment(fromSymbol: String){
+        binding.guideline?.setGuidelinePercent(0.5f)
+        supportFragmentManager.popBackStack()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, CoinDetailFragment.newInstance(fromSymbol))
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun launchDetailActivity(fromSymbol: String){
+        val intent = CoinDetailActivity.newIntent(this@CoinPriceListActivity, fromSymbol)
+        startActivity(intent)
+    }
+
+    private fun isVerticalOrientation(): Boolean{
+        return binding.fragmentContainer == null
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        binding.guideline?.setGuidelinePercent(1f)
+
     }
 }
