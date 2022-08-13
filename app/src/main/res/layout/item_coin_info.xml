@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
+    app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,19 +14,20 @@
 
         <ImageView
             android:id="@+id/ivLogoCoin"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="20dp"
+            android:layout_marginVertical="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/tvSymbols"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="4dp"
             android:textColor="#000"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/tvPrice"
@@ -38,7 +40,7 @@
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="4dp"
             android:textColor="#000"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -52,14 +54,28 @@
             android:id="@+id/tvLastUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:textColor="#000"
             android:textSize="14sp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivLogoCoin"
-            tools:text="Время последнего обновления: \n 21:52:33" />
+            app:layout_constraintTop_toBottomOf="@id/tvPrice"
+            tools:text="Время последнего обновления: \n 21:52:33"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/value_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="14sp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivLogoCoin"
+            app:layout_constraintTop_toBottomOf="@id/tvPrice"
+            tools:text="Изменение цены" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

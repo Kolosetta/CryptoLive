@@ -22,10 +22,12 @@ class CoinInfoAdapter(private val context: Context) : ListAdapter<CoinInfo, Coin
         val coin = getItem(position)
         val symbolsTemplate = context.resources.getString(R.string.symbols_template)
         val lastUpdateTemplate = context.resources.getString(R.string.last_update_template)
+        val change24hoursTemplate = context.resources.getString(R.string.change_24_hours)
         with(holder.binding) {
                 tvSymbols.text = String.format(symbolsTemplate, coin.fromSymbol, coin.toSymbol)
                 tvPrice.text = coin.price
                 tvLastUpdate.text = String.format(lastUpdateTemplate, coin.lastUpdate)
+                valueChange.text = String.format(change24hoursTemplate, coin.change24Hour)
                 Picasso.get().load(coin.imgUrl).into(ivLogoCoin)
                 root.setOnClickListener {
                     onCoinClickListener?.onCoinClick(coin)

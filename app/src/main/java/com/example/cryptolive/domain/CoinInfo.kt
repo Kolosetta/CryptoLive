@@ -8,5 +8,6 @@ data class CoinInfo(
   val lastUpdate: String,
   val fromSymbol: String,
   val toSymbol: String?,
+  val change24Hour: String?,
   val imgUrl: String
 )

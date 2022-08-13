@@ -19,6 +19,7 @@ class CoinMapper {
         lastMarket = coinInfo.lastMarket,
         lastUpdate = coinInfo.lastUpdate,
         toSymbol = coinInfo.toSymbol,
+        change24Hour = coinInfo.change24Hour,
         imgUrl = BASE_IMAGE_URL + coinInfo.imageUrl
     )
 
@@ -57,6 +58,7 @@ class CoinMapper {
         lastMarket = coinInfoDbModel.lastMarket,
         lastUpdate = convertTimestampToTime(coinInfoDbModel.lastUpdate),
         toSymbol = coinInfoDbModel.toSymbol,
+        change24Hour = diffToPercents(coinInfoDbModel.change24Hour, coinInfoDbModel.price),
         imgUrl = coinInfoDbModel.imgUrl
     )
 
@@ -69,6 +71,13 @@ class CoinMapper {
         val sdf = SimpleDateFormat(pattern, Locale.getDefault())
         sdf.timeZone = TimeZone.getDefault()
         return sdf.format(date)
+    }
+
+    //Возвращает изменение цены в процентах. Принимает изменение цены и текущую цену
+    private fun diffToPercents(change: String?, price: String?): String {
+        val changeDouble = change?.toDouble() ?: return "0%"
+        val priceDouble = price?.toDouble() ?: return "0%"
+        return String.format("%.3f", changeDouble / priceDouble) + "%"
     }
 
     companion object{

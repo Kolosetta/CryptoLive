@@ -4,12 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import com.example.cryptolive.R
-import com.example.cryptolive.data.network.ApiFactory.BASE_IMAGE_URL
 import com.example.cryptolive.databinding.ActivityCoinDetailBinding
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_coin_detail.*
 
 class CoinDetailActivity : AppCompatActivity() {
     private val binding by lazy {
