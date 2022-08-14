@@ -9,4 +9,5 @@
     <string name="last_market_label">Последняя сделка:</string>
     <string name="last_updated_label">Обновлено:</string>
     <string name="change_24_hours">Изменение за день: %s</string>
+    <string name="cryptolive_title">CryptoLive</string>
 </resources>

@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="10dp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/dark_grey">
 
         <ImageView
             android:id="@+id/ivLogoCoin"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:textColor="#000"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/tvPrice"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:textColor="#000"
+            android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +54,7 @@
             android:id="@+id/tvLastUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#000"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +68,7 @@
             android:id="@+id/value_change"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#000"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"

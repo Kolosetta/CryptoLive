@@ -1,6 +1,7 @@
 package com.example.cryptolive.data.repository
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.work.ExistingWorkPolicy
@@ -11,6 +12,7 @@ import com.example.cryptolive.data.workers.RefreshDataWorker
 import com.example.cryptolive.domain.CoinInfo
 import com.example.cryptolive.domain.repository.CoinRepository
 import kotlinx.coroutines.delay
+import java.util.*
 
 class CoinRepositoryImp(private val application: Application) : CoinRepository {
 
@@ -31,12 +33,12 @@ class CoinRepositoryImp(private val application: Application) : CoinRepository {
             }
         }
 
-    //Загружает информацию о валютах и кладет в бд
+    //Запускает Worker, который в фоне загружает данные о валютах
     override fun loadData() {
         val workManager = WorkManager.getInstance(application)
         workManager.enqueueUniqueWork(
             RefreshDataWorker.NAME,
-            ExistingWorkPolicy.KEEP,
+            ExistingWorkPolicy.REPLACE,
             RefreshDataWorker.makeRequest()
         )
     }
