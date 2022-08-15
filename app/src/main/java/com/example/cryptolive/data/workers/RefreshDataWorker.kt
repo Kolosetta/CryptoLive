@@ -29,7 +29,7 @@ class RefreshDataWorker(context: Context, params: WorkerParameters) : CoroutineW
                 coinInfoDao.insertPriceList(coinInfoDbModelList)
             } catch (e: Exception) {
             }
-            delay(10000)
+            delay(1000000)
         }
     }
 

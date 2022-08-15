@@ -6,5 +6,6 @@ import com.example.cryptolive.domain.CoinInfo
 interface CoinRepository {
     fun getCoinInfoList(): LiveData<List<CoinInfo>>
     fun getCoinInfo(fromSymbol: String): LiveData<CoinInfo>
-    fun loadData()
+    fun loadDataInBackGround()
+    suspend fun loadDataManually()
 }

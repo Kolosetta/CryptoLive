@@ -2,13 +2,17 @@ package com.example.cryptolive.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.cryptolive.R
 import com.example.cryptolive.databinding.ActivityCoinPrceListBinding
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), CoinListFragment.Orientation {
 
     private lateinit var binding: ActivityCoinPrceListBinding
+    private lateinit var viewModel: CoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,8 +20,9 @@ class MainActivity : AppCompatActivity(), CoinListFragment.Orientation {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar) //Установка toolBar как actionBar для старых версий
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
 
-        binding.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(tab?.text){
                     "Избранное" -> {
@@ -47,6 +52,14 @@ class MainActivity : AppCompatActivity(), CoinListFragment.Orientation {
             }
 
         })
+
+        binding.swipeLayout?.setOnRefreshListener {
+            lifecycleScope.launch {
+                viewModel.loadDataManually()
+            }
+            binding.swipeLayout?.isRefreshing = false
+        }
+
     }
 
     override fun isVerticalOrientation(): Boolean {

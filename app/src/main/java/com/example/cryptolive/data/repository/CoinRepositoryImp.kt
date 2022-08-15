@@ -8,15 +8,16 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.example.cryptolive.data.database.AppDatabase
 import com.example.cryptolive.data.mapper.CoinMapper
+import com.example.cryptolive.data.network.ApiFactory
 import com.example.cryptolive.data.workers.RefreshDataWorker
 import com.example.cryptolive.domain.CoinInfo
 import com.example.cryptolive.domain.repository.CoinRepository
-import kotlinx.coroutines.delay
-import java.util.*
+
 
 class CoinRepositoryImp(private val application: Application) : CoinRepository {
 
     private val coinInfoDao = AppDatabase.getInstance(application).CoinInfoDao()
+    private val apiService = ApiFactory.apiService
     private val mapper = CoinMapper()
 
     override fun getCoinInfoList(): LiveData<List<CoinInfo>> =
@@ -34,7 +35,7 @@ class CoinRepositoryImp(private val application: Application) : CoinRepository {
         }
 
     //Запускает Worker, который в фоне загружает данные о валютах
-    override fun loadData() {
+    override fun loadDataInBackGround() {
         val workManager = WorkManager.getInstance(application)
         workManager.enqueueUniqueWork(
             RefreshDataWorker.NAME,
@@ -42,4 +43,18 @@ class CoinRepositoryImp(private val application: Application) : CoinRepository {
             RefreshDataWorker.makeRequest()
         )
     }
+
+    override suspend fun loadDataManually() {
+        Log.i("Lol", "Пошла загрузка")
+        val topCoins = apiService.getTopCoinsInfo(limit = 50)
+        val fromSymbols = mapper.mapNamesListToString(topCoins)
+        val jsonContainer = apiService.getFullPriceList(fSyms = fromSymbols)
+        val coinInfoDtoList = mapper.mapJsonContainerToListCoinInfo(jsonContainer)
+        val coinInfoDbModelList = coinInfoDtoList.map {
+            mapper.mapDtoToDbModel(it)
+        }
+        coinInfoDao.insertPriceList(coinInfoDbModelList)
+        Log.i("Lol", "Остановилась загрузка")
+    }
+
 }
