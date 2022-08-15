@@ -80,6 +80,10 @@ class CoinListFragment : Fragment() {
             .commit()
     }
 
+    companion object{
+        fun newInstance() = CoinListFragment()
+    }
+
     interface Orientation{
         fun isVerticalOrientation(): Boolean
         fun moveGuideLine()

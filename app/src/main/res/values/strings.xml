@@ -11,4 +11,6 @@
     <string name="change_24_hours">Изменение за день: %s</string>
     <string name="cryptolive_title">CryptoLive</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_tab_label">Главная</string>
+    <string name="favorites_tab_label">Избранное</string>
 </resources>
