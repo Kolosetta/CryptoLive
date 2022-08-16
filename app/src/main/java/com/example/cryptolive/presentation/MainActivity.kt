@@ -22,10 +22,15 @@ class MainActivity : AppCompatActivity(), CoinListFragment.Orientation {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
 
+        if(savedInstanceState == null){
+            viewModel.loadDataInBackground()
+        }
+
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(tab?.text){
                     "Избранное" -> {
+                        supportFragmentManager.popBackStack()
                         supportFragmentManager
                             .beginTransaction()
                             .replace(R.id.main_fragment_container, FavoritesFragment.newInstance())
@@ -33,6 +38,8 @@ class MainActivity : AppCompatActivity(), CoinListFragment.Orientation {
                             .commit()
                     }
                     "Главная" -> {
+                        binding.guideline?.setGuidelinePercent(1f)
+                        supportFragmentManager.popBackStack()
                         supportFragmentManager
                             .beginTransaction()
                             .replace(R.id.main_fragment_container, CoinListFragment.newInstance())
@@ -53,11 +60,11 @@ class MainActivity : AppCompatActivity(), CoinListFragment.Orientation {
 
         })
 
-        binding.swipeLayout?.setOnRefreshListener {
+        binding.swipeLayout.setOnRefreshListener {
             lifecycleScope.launch {
                 viewModel.loadDataManually()
             }
-            binding.swipeLayout?.isRefreshing = false
+            binding.swipeLayout.isRefreshing = false
         }
 
     }

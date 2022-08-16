@@ -23,12 +23,11 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
         return getCoinInfoUseCase(fromSymbols)
     }
 
-    suspend fun loadDataManually(){
-        loadDataManuallyUseCase.invoke()
-    }
-
-    init {
+    fun loadDataInBackground(){
         loadDataInBackGroundUseCase()
     }
 
+    suspend fun loadDataManually(){
+        loadDataManuallyUseCase.invoke()
+    }
 }

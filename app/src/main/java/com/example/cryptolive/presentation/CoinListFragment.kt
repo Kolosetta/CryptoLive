@@ -63,6 +63,7 @@ class CoinListFragment : Fragment() {
     }
 
     private fun launchDetailFragmentMainContainer(fromSymbol: String){
+        requireActivity().supportFragmentManager.popBackStack()
         requireActivity().supportFragmentManager
             .beginTransaction()
             .replace(R.id.main_fragment_container, CoinDetailFragment.newInstance(fromSymbol))
