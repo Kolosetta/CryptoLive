@@ -9,5 +9,6 @@ data class CoinInfo(
   val fromSymbol: String,
   val toSymbol: String?,
   val change24Hour: String?,
+  val change24HourPercent: Double?,
   val imgUrl: String
 )

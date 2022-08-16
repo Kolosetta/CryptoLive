@@ -27,7 +27,7 @@ class CoinInfoAdapter(private val context: Context) : ListAdapter<CoinInfo, Coin
                 tvSymbols.text = String.format(symbolsTemplate, coin.fromSymbol, coin.toSymbol)
                 tvPrice.text = coin.price
                 tvLastUpdate.text = String.format(lastUpdateTemplate, coin.lastUpdate)
-                valueChange.text = String.format(change24hoursTemplate, coin.change24Hour)
+                valueChange.text = String.format(change24hoursTemplate, coin.change24HourPercent)
                 Picasso.get().load(coin.imgUrl).into(ivLogoCoin)
                 root.setOnClickListener {
                     onCoinClickListener?.onCoinClick(coin)

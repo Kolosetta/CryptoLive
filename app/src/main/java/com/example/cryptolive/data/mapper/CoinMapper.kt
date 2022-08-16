@@ -13,13 +13,14 @@ import java.util.*
 class CoinMapper {
     fun mapDtoToDbModel(coinInfo: CoinInfoDto): CoinInfoDbModel = CoinInfoDbModel(
         fromSymbol = coinInfo.fromSymbol,
-        price = coinInfo.price,
+        price = coinInfo.price?.toDouble(),
         dayLowPrice = coinInfo.lowDay,
         dayHighPrice = coinInfo.highDay,
         lastMarket = coinInfo.lastMarket,
         lastUpdate = coinInfo.lastUpdate,
         toSymbol = coinInfo.toSymbol,
         change24Hour = coinInfo.change24Hour,
+        change24HourPercent = coinInfo.changePCT24Hour?.toDouble(),
         imgUrl = BASE_IMAGE_URL + coinInfo.imageUrl
     )
 
@@ -52,13 +53,14 @@ class CoinMapper {
     //Преобразует coinInfo из БД в coinInfo бизнес слоя
     fun mapDbModelToEntity(coinInfoDbModel: CoinInfoDbModel): CoinInfo = CoinInfo(
         fromSymbol = coinInfoDbModel.fromSymbol,
-        price = coinInfoDbModel.price,
+        price = coinInfoDbModel.price.toString(),
         dayLowPrice = coinInfoDbModel.dayLowPrice,
         dayHighPrice = coinInfoDbModel.dayHighPrice,
         lastMarket = coinInfoDbModel.lastMarket,
         lastUpdate = convertTimestampToTime(coinInfoDbModel.lastUpdate),
         toSymbol = coinInfoDbModel.toSymbol,
-        change24Hour = diffToPercents(coinInfoDbModel.change24Hour, coinInfoDbModel.price),
+        change24Hour = coinInfoDbModel.change24Hour,
+        change24HourPercent = coinInfoDbModel.change24HourPercent,
         imgUrl = coinInfoDbModel.imgUrl
     )
 
@@ -71,13 +73,6 @@ class CoinMapper {
         val sdf = SimpleDateFormat(pattern, Locale.getDefault())
         sdf.timeZone = TimeZone.getDefault()
         return sdf.format(date)
-    }
-
-    //Возвращает изменение цены в процентах. Принимает изменение цены и текущую цену
-    private fun diffToPercents(change: String?, price: String?): String {
-        val changeDouble = change?.toDouble() ?: return "0%"
-        val priceDouble = price?.toDouble() ?: return "0%"
-        return String.format("%.3f", changeDouble / priceDouble) + "%"
     }
 
     companion object{

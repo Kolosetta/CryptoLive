@@ -9,7 +9,7 @@ import com.example.cryptolive.data.database.model.CoinInfoDbModel
 
 @Dao
 interface CoinInfoDao {
-    @Query("SELECT * FROM price_list ORDER BY lastUpdate DESC")
+    @Query("SELECT * FROM price_list ORDER BY abs(change24HourPercent) DESC")
     fun getPriceList(): LiveData<List<CoinInfoDbModel>>
 
     @Query("SELECT * FROM price_list WHERE fromSymbol == :fSym LIMIT 1")
