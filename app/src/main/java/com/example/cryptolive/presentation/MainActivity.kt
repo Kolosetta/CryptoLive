@@ -29,34 +29,14 @@ class MainActivity : AppCompatActivity(), CoinListFragment.Orientation {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when(tab?.text){
-                    "Избранное" -> {
-                        supportFragmentManager.popBackStack()
-                        supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.main_fragment_container, FavoritesFragment.newInstance())
-                            .addToBackStack(null)
-                            .commit()
-                    }
-                    "Главная" -> {
-                        binding.guideline?.setGuidelinePercent(1f)
-                        supportFragmentManager.popBackStack()
-                        supportFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.main_fragment_container, CoinListFragment.newInstance())
-                            .addToBackStack(null)
-                            .commit()
-                    }
+                    "Избранное" -> { startFavoritesFragment() }
+                    "Главная" -> { startMainListFragment() }
                 }
-
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
 
         })
 
@@ -67,6 +47,27 @@ class MainActivity : AppCompatActivity(), CoinListFragment.Orientation {
             binding.swipeLayout.isRefreshing = false
         }
 
+    }
+
+    fun startFavoritesFragment(){
+        supportFragmentManager.popBackStack()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_fragment_container, FavoritesFragment.newInstance())
+            .addToBackStack(null)
+            .commit()
+    }
+
+    fun startMainListFragment(){
+        if(!isVerticalOrientation()) {
+            binding.guideline?.setGuidelinePercent(1f)
+        }
+        supportFragmentManager.popBackStack()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.main_fragment_container, CoinListFragment.newInstance())
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun isVerticalOrientation(): Boolean {
