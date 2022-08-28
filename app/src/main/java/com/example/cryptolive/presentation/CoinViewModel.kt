@@ -1,20 +1,16 @@
 package com.example.cryptolive.presentation
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.cryptolive.data.repository.CoinRepositoryImp
+import androidx.lifecycle.ViewModel
 import com.example.cryptolive.domain.*
+import javax.inject.Inject
 
-class CoinViewModel(application: Application) : AndroidViewModel(application) {
-
-    //Пока без DI нарушается принцип Clean Architecture
-    private val repository = CoinRepositoryImp(application)
-
-    private val getCoinListUseCase = GetCoinInfoListUseCase(repository)
-    private val getCoinInfoUseCase = GetCoinInfoUseCase(repository)
-    private val loadDataInBackGroundUseCase = LoadDataInBackGroundUseCase(repository)
-    private val loadDataManuallyUseCase = LoadDataManuallyUseCase(repository)
+class CoinViewModel @Inject constructor(
+    private val getCoinListUseCase: GetCoinInfoListUseCase,
+    private val getCoinInfoUseCase: GetCoinInfoUseCase,
+    private val loadDataInBackGroundUseCase: LoadDataInBackGroundUseCase,
+    private val loadDataManuallyUseCase: LoadDataManuallyUseCase
+) : ViewModel() {
 
 
     val coinInfoList = getCoinListUseCase()

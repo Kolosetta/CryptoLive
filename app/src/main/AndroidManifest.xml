@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.cryptolive">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".presentation.CoinApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.CoinDetailActivity"/>
+        <activity android:name=".presentation.CoinDetailActivity" />
     </application>
 
 </manifest>

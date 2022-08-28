@@ -8,19 +8,28 @@ import com.example.cryptolive.R
 import com.example.cryptolive.databinding.ActivityCoinPrceListBinding
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), CoinListFragment.Orientation {
 
     private lateinit var binding: ActivityCoinPrceListBinding
     private lateinit var viewModel: CoinViewModel
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (application as CoinApp).component
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityCoinPrceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar) //Установка toolBar как actionBar для старых версий
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
 
         if(savedInstanceState == null){
             viewModel.loadDataInBackground()

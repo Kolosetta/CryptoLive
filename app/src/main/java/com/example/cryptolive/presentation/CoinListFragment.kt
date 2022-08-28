@@ -12,6 +12,7 @@ import com.example.cryptolive.databinding.FragmentCoinListBinding
 import com.example.cryptolive.domain.CoinInfo
 import com.example.cryptolive.presentation.adapters.CoinInfoAdapter
 import java.lang.RuntimeException
+import javax.inject.Inject
 
 
 class CoinListFragment : Fragment() {
@@ -19,6 +20,13 @@ class CoinListFragment : Fragment() {
     private lateinit var viewModel: CoinViewModel
     private lateinit var binding: FragmentCoinListBinding
     private lateinit var orientation: Orientation
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (activity?.application as CoinApp).component
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +38,7 @@ class CoinListFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
+        component.inject(this)
         super.onAttach(context)
         if(context is Orientation){
             orientation = context
@@ -55,7 +64,7 @@ class CoinListFragment : Fragment() {
         }
         binding.rvCoinPriceList.adapter = adapter
         binding.rvCoinPriceList.itemAnimator = null
-        viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
         viewModel.coinInfoList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
